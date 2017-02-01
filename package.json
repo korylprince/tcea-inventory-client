@@ -1,0 +1,60 @@
+{
+  "name": "tcea-inventory-client",
+  "version": "1.0.0",
+  "description": "device inventory system",
+  "main": "dist/inventory.js",
+  "scripts": {
+    "dev-server": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --inline --hot --port 9090 --content-base dist",
+    "dev": "./node_modules/webpack/bin/webpack.js --watch --progress",
+    "build": "./node_modules/webpack/bin/webpack.js --progress",
+    "build-prod": "./node_modules/webpack/bin/webpack.js --progress --config webpack.config.prod.babel.js",
+    "lint": "./node_modules/eslint/bin/eslint.js  --ignore-pattern !.eslintrc.js *.js .*.js src/*.js src/js/*.js src/mixins/*.js src/components/*.vue"
+  },
+  "keywords": [
+    "TCEA",
+    "inventory"
+  ],
+  "author": "Kory Prince <korylprince@gmail.com>",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "axios": "0.15.3",
+    "gravatar": "1.6.0",
+    "lodash": "4.17.4",
+    "moment": "2.17.1",
+    "vee-validate": "2.0.0-beta.18",
+    "vue": "2.1.10",
+    "vue-material": "0.6.3",
+    "vue-router": "2.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.2",
+    "autosize": "^3.0.20",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2017": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-runtime": "^6.22.0",
+    "css-loader": "^0.26.1",
+    "element.scrollintoviewifneeded-polyfill": "^1.0.1",
+    "eslint": "^3.14.1",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "favicons-webpack-plugin": "0.0.7",
+    "html-webpack-plugin": "^2.28.0",
+    "node-sass": "^4.4.0",
+    "optimize-js-plugin": "0.0.4",
+    "postcss-loader": "^1.2.2",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^4.1.1",
+    "style-loader": "^0.13.1",
+    "vue-loader": "^10.2.0",
+    "vue-template-compiler": "^2.1.10",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.3"
+  }
+}

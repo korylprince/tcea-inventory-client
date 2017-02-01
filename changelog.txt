@@ -1,0 +1,60 @@
+✓ move statuses to api/database
+✓ when conflict (409) have API return duplicate id
+✓ trim whitespace from all inputs on API
+✓ refactor dialogs into top level+event bus
+✓ just store user_id in local storage and fetch user each application load (so no stale user data)
+✓ convert $on to @on on element
+✓ write user profile and password edit page
+✓ not found route/component
+✓ replace not-exists-dialog with not found component
+✓ add save indicator
+✓ check form for dirty fields so you can't just save the same data.
+✓ modify read* api to include ?events=true option to specify if events are included (lots of extra dropped data will be saved)
+✓ recreate events-list-view
+✓ do caching of user and model reads (cache promise and return)
+✓ convert device-*.vue to model-*.vue
+✓ write userCreate page
+✓ remove generic logging from api and use ctx User to log useful information
+✓ let tx handler commit or rollback tx. will need to pass json back up to handler to work
+✓ write query api
+✓ make created event have all original fields
+✓ make modified event more of a transaction
+✓ write query views
+✓ cache search results so going back will work nicer
+✓ write easy query (search all fields) api for device
+✓ write search bar
+✓ md-ink on tool bar is a bit much? 
+✓ write stats api
+✓ write dashboard
+✓ join model in device queries to lower http requests
+✓ add device and model search pages somewhere
+✓ Favicon webpack plugin
+✓ if search returns one results, go to it
+✓ create high resolution favicon
+✓ preload data before routeload: beforeRouteEnter (to, from, next)
+✓ refresh dashboard on logo click
+✓ remove extra languages from moment.js
+✓ have events api return all data (as opposed to async loading them afterwards)
+✓ unsaved changed dialog
+✓ add loading component + events
+✓ add route loading screen
+✓ on route change close exists dialog
+✓ fix signin issue (dashboard not showing) 
+✓ loading for all actions
+✓ block shift-enter when loading or saving
+✓ loading on search
+✓ HTML5 history mode
+✓ minify EVERYTHING (html, css, javascript)
+✓ css prefixify
+✓ compile for production
+✓ use ENV for api url config
+
+TODO:
+? replace $route watcher with beforeUpdate (vue-router 2.2)
+? pass $route as prop (vue-router 2.2)
+? make pretty times refresh every X seconds
+? add advanced querying
+? write realtime API
+? add attachments
+? replace store and eventBus with vuex
+? fix scrollTo behavior
