@@ -152,6 +152,10 @@ export default {
     float: right;
     padding-left: 10px;
     padding-right: 10px;
+    transition: none;
+}
+
+#nav-search {
     user-select: none;
 }
 
@@ -163,7 +167,6 @@ export default {
     padding-left: 5px;
     outline: none !important;
     background: none;
-    transition: width 0.25s, margin 0.25s;
 }
 
 #nav-search.search-focus {
@@ -173,6 +176,7 @@ export default {
     flex: 1;
     margin-left: auto;
     margin-right: auto;
+    transition: flex 0.25s;
 }
 
 #nav-search.search-focus input {
