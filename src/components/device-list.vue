@@ -3,6 +3,7 @@
 		<md-card-area md-inset>
 			<md-card-header >
 				<div class="md-headline">Device Search Results</div>
+                <div class="md-subheading">{{count}} devices found</div>
 			</md-card-header>
 		</md-card-area>
 
@@ -39,6 +40,12 @@ export default {
     computed: {
         devices: function() {
             return store.store.device_search;
+        },
+        count: function() {
+            if (store.store.device_search != null) {
+                return store.store.device_search.length;
+            }
+            return 0;
         }
     },
     beforeCreate: function() {

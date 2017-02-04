@@ -3,6 +3,7 @@
 		<md-card-area md-inset>
 			<md-card-header >
 				<div class="md-headline">Model Search Results</div>
+                <div class="md-subheading">{{count}} models found</div>
 			</md-card-header>
 		</md-card-area>
 
@@ -33,6 +34,12 @@ export default {
     computed: {
         models: function() {
             return store.store.model_search;
+        },
+        count: function() {
+            if (store.store.model_search != null) {
+                return store.store.model_search.length;
+            }
+            return 0;
         }
     },
     beforeCreate: function() {
