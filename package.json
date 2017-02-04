@@ -7,7 +7,7 @@
     "dev-server": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --inline --hot --port 9090 --content-base dist",
     "dev": "./node_modules/webpack/bin/webpack.js --watch --progress",
     "build": "./node_modules/webpack/bin/webpack.js --progress",
-    "build-prod": "./node_modules/webpack/bin/webpack.js --progress --config webpack.config.prod.babel.js",
+    "build-prod": "rm -Rf ./dist && ./node_modules/webpack/bin/webpack.js --progress --config webpack.config.prod.babel.js",
     "lint": "./node_modules/eslint/bin/eslint.js  --ignore-pattern !.eslintrc.js *.js .*.js src/*.js src/js/*.js src/mixins/*.js src/components/*.vue"
   },
   "keywords": [
