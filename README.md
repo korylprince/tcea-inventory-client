@@ -1,8 +1,8 @@
-#Info
+# Info
 
 This is the front end interface for [tcea-inventory-server](https://github.com/korylprince/tcea-inventory-server), an inventory system the Tech Team for the annual [TCEA](tcea.org) convention uses.
 
-#Install
+# Install
 
 ```
 git clone https://github.com/korylprince/tcea-inventory-client.git
@@ -12,25 +12,25 @@ git submodule update
 npm install
 ```
 
-#Development
+# Development
 
 ```
 API_BASE="<api_location>" npm run dev
 ```
 
-#Build for Production
+# Build for Production
 
 ```
 API_BASE="<api_location>" npm run build-prod
 ```
 
-#Linting
+# Linting
 
 ```
 npm run lint
 ```
 
-#Libraries
+# Libraries
 
 (Of particular note)
 
