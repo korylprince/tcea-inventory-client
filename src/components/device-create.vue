@@ -31,13 +31,18 @@
 					<span class="md-error">{{errors.first("status")}}</span>
                 </md-input-container>
 
-                <md-input-container :class="{'md-input-invalid': errors.has('location')}">
-                    <label for="location">Location</label>
-                    <md-select name="location" v-model="device.location" v-validate.initial="device.location" data-vv-name="location" data-vv-rules="required" required>
-                        <md-option :value="location" v-for="location in locations">{{location}}</md-option>
-                    </md-select>
+                <div class="location" :class="{'md-error': errors.has('location')}">
+                    <label for="location">Location<sup>*</sup></label>
+                    <v-select v-model="device.location"
+                        name="location"
+                        :options="locations"
+                        placeholder="Select location"
+                        v-validate.initial="device.location"
+                        data-vv-name="location"
+                        data-vv-rules="required" >
+                    </v-select>
 					<span class="md-error">{{errors.first("location")}}</span>
-                </md-input-container>
+                </div>
 
 				<md-input-container>
 					<label>Note</label>
@@ -56,12 +61,14 @@
 </template>
 <script>
 import debounce from "lodash/debounce";
+import VSelect from "vue-select";
 import db from "../js/database.js";
 import eventBus from "../js/event-bus.js";
 import loadingMixin from "../mixins/loading.js";
 export default {
     name: "device-create",
     mixins: [loadingMixin],
+    components: {VSelect},
     data: function() {
         return {
             device: {
@@ -72,7 +79,7 @@ export default {
             },
             note: null,
             statuses: null,
-            locations: null,
+            locations: [],
             models: null
         };
     },
@@ -149,3 +156,21 @@ export default {
     }
 };
 </script>
+<style>
+.location {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.location sup {
+    font-size: 12px;
+}
+
+.v-select {
+    margin-top: 5px;
+}
+
+.md-error {
+    color: red;
+}
+</style>

@@ -1,92 +1,98 @@
 <template>
-	<div class="content">
-		<md-card>
-			<md-card-area md-inset>
-				<md-card-header >
-					<div class="md-headline">Edit Device</div>
-				</md-card-header>
-			</md-card-area>
+    <div class="content">
+        <md-card>
+            <md-card-area md-inset>
+                <md-card-header >
+                    <div class="md-headline">Edit Device</div>
+                </md-card-header>
+            </md-card-area>
 
-			<md-card-content>
-				<form novalidate @keyup.shift.enter.prevent.stop="save(device)">
+            <md-card-content>
+                <form novalidate @keyup.shift.enter.prevent.stop="save(device)">
 
-					<md-input-container :class="{'md-input-invalid': errors.has('serial number')}">
-						<label>Serial Number</label>
-						<md-input ref="serial_number" v-model="device.serial_number" v-validate.initial="device.serial_number" data-vv-name="serial number" data-vv-rules="required" required></md-input>
-						<span class="md-error">{{errors.first("serial number")}}</span>
-					</md-input-container>
+                    <md-input-container :class="{'md-input-invalid': errors.has('serial number')}">
+                        <label>Serial Number</label>
+                        <md-input ref="serial_number" v-model="device.serial_number" v-validate.initial="device.serial_number" data-vv-name="serial number" data-vv-rules="required" required></md-input>
+                        <span class="md-error">{{errors.first("serial number")}}</span>
+                    </md-input-container>
 
-					<md-input-container :class="{'md-input-invalid': errors.has('model')}">
-						<label for="model">Model</label>
-						<md-select name="model" v-model="device.model_id" v-validate.initial="device.model_id" data-vv-name="model" data-vv-rules="required" required>
-							<md-option :value="model.id" v-for="model in models">{{model.manufacturer}} {{model.model}}</md-option>
-						</md-select>
-						<span class="md-error">{{errors.first("model")}}</span>
-					</md-input-container>
+                    <md-input-container :class="{'md-input-invalid': errors.has('model')}">
+                        <label for="model">Model</label>
+                        <md-select name="model" v-model="device.model_id" v-validate.initial="device.model_id" data-vv-name="model" data-vv-rules="required" required>
+                            <md-option :value="model.id" v-for="model in models">{{model.manufacturer}} {{model.model}}</md-option>
+                        </md-select>
+                        <span class="md-error">{{errors.first("model")}}</span>
+                    </md-input-container>
 
-					<md-input-container :class="{'md-input-invalid': errors.has('status')}">
-						<label for="status">Status</label>
-						<md-select name="status1" v-model="device.status" v-validate.initial="device.status" data-vv-name="status" data-vv-rules="required" required>
-							<md-option :value="status" v-for="status in statuses">{{status}}</md-option>
-						</md-select>
-						<span class="md-error">{{errors.first("status")}}</span>
-					</md-input-container>
+                    <md-input-container :class="{'md-input-invalid': errors.has('status')}">
+                        <label for="status">Status</label>
+                        <md-select name="status1" v-model="device.status" v-validate.initial="device.status" data-vv-name="status" data-vv-rules="required" required>
+                            <md-option :value="status" v-for="status in statuses">{{status}}</md-option>
+                        </md-select>
+                        <span class="md-error">{{errors.first("status")}}</span>
+                    </md-input-container>
 
-					<md-input-container :class="{'md-input-invalid': errors.has('location')}">
-						<label for="location">Location</label>
-						<md-select name="location" v-model="device.location" v-validate.initial="device.location" data-vv-name="location" data-vv-rules="required" required>
-							<md-option :value="location" v-for="location in locations">{{location}}</md-option>
-						</md-select>
-						<span class="md-error">{{errors.first("location")}}</span>
-					</md-input-container>
+                    <div class="location" :class="{'md-error': errors.has('location')}">
+                        <label for="location">Location<sup>*</sup></label>
+                        <v-select v-model="device.location"
+                            name="location"
+                            :options="locations"
+                            placeholder="Select location"
+                            v-validate.initial="device.location"
+                            data-vv-name="location"
+                            data-vv-rules="required" >
+                        </v-select>
+                        <span class="md-error">{{errors.first("location")}}</span>
+                    </div>
 
-				</form>
-			</md-card-content>
+                </form>
+            </md-card-content>
 
-			<md-card-actions>
-				<md-button class="md-raised md-primary" @click="save(device)" :disabled="!dirty || errors.any() || device.serial_number == null || device.model_id == null || device.status == null || device.location == null">Save</md-button>
+            <md-card-actions>
+                <md-button class="md-raised md-primary" @click="save(device)" :disabled="!dirty || errors.any() || device.serial_number == null || device.model_id == null || device.status == null || device.location == null">Save</md-button>
                 <md-button class="md-raised md-accent" @click="$router.push({name: 'dashboard'})">Cancel</md-button>
-			</md-card-actions>
-		</md-card>
+            </md-card-actions>
+        </md-card>
 
-		<md-card class="card-multiple">
-			<md-card-area md-inset>
-				<md-card-header >
-					<div class="md-headline">Add Note</div>
-				</md-card-header>
-			</md-card-area>
+        <md-card class="card-multiple">
+            <md-card-area md-inset>
+                <md-card-header >
+                    <div class="md-headline">Add Note</div>
+                </md-card-header>
+            </md-card-area>
 
-			<md-card-content>
-				<form novalidate @keyup.shift.enter.prevent.stop="addNote(device.id, note)">
+            <md-card-content>
+                <form novalidate @keyup.shift.enter.prevent.stop="addNote(device.id, note)">
 
-					<md-input-container>
-						<label>Enter note...</label>
-						<md-textarea v-model="note"></md-textarea>
-					</md-input-container>
+                    <md-input-container>
+                        <label>Enter note...</label>
+                        <md-textarea v-model="note"></md-textarea>
+                    </md-input-container>
 
-				</form>
-			</md-card-content>
+                </form>
+            </md-card-content>
 
-			<md-card-actions>
-				<md-button class="md-raised md-primary" @click="addNote(device.id, note)" :disabled="note == null || note === ''">Add Note</md-button>
-			</md-card-actions>
-		</md-card>
+            <md-card-actions>
+                <md-button class="md-raised md-primary" @click="addNote(device.id, note)" :disabled="note == null || note === ''">Add Note</md-button>
+            </md-card-actions>
+        </md-card>
 
-		<md-card class="card-multiple">
-			<md-card-area md-inset>
-				<md-card-header >
-					<div class="md-headline">History</div>
-				</md-card-header>
-			</md-card-area>
+        <md-card class="card-multiple">
+            <md-card-area md-inset>
+                <md-card-header >
+                    <div class="md-headline">History</div>
+                </md-card-header>
+            </md-card-area>
 
-			<md-card-content v-if="device.events != null">
+            <md-card-content v-if="device.events != null">
                 <event-view :event="event" :master="device_" v-for="event in device.events" @revert="revert"></event-view>
-			</md-card-content>
-		</md-card>
-	</div>
+            </md-card-content>
+        </md-card>
+    </div>
 </template>
 <script>
 import debounce from "lodash/debounce";
+import VSelect from "vue-select";
 import db from "../js/database.js";
 import eventBus from "../js/event-bus.js";
 import eventView from "./event-view.vue";
@@ -94,7 +100,7 @@ import loadingMixin from "../mixins/loading.js";
 export default {
     name: "device-edit",
     mixins: [loadingMixin],
-    components: {eventView},
+    components: {eventView, VSelect},
     data: function() {
         return {
             device: {
@@ -112,7 +118,7 @@ export default {
                 location: null
             },
             statuses: null,
-            locations: null,
+            locations: [],
             models: null,
             note: null
         };
@@ -277,3 +283,30 @@ export default {
     }
 };
 </script>
+<style>
+.md-card {
+    overflow: inherit;
+}
+
+.md-card.card-multiple {
+    z-index: 0;
+}
+
+.location {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.location sup {
+    font-size: 12px;
+}
+
+.v-select {
+    margin-top: 5px;
+    z-index: 100;
+}
+
+.md-error {
+    color: red;
+}
+</style>
