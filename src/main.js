@@ -1,9 +1,8 @@
-// import "vue-material/dist/vue-material.css";
+import "vue-material/dist/vue-material.css";
 import "./css/main.css";
 
 import Vue from "vue";
-// import VueMaterial from "vue-material";
-import VueMaterial from "../vue-material/src/index.js";
+import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
 
 Vue.use(VueMaterial);

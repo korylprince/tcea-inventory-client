@@ -1,6 +1,6 @@
 <template>
-    <md-speed-dial md-mode="scale" class="md-fab-bottom-right" @md-fab-click="$router.push({name: 'deviceCreate'})" v-show="user != null">
-        <md-button class="md-fab" md-fab-trigger>
+    <md-speed-dial md-mode="scale" md-open="hover" class="md-fab-bottom-right" v-show="user != null">
+        <md-button class="md-fab" md-fab-trigger @click="$router.push({name: 'deviceCreate'})">
             <md-icon md-icon-morph>computer</md-icon>
             <md-icon>add</md-icon>
             <md-tooltip md-direction="left">Create Device</md-tooltip>
