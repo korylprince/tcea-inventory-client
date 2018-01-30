@@ -10,6 +10,7 @@ export default new Vue({
                 statuses_cache: null,
                 device_cache: {},
                 model_cache: {},
+                location_cache: {},
                 user_cache: {}
             }
         };

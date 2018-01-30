@@ -41,6 +41,31 @@ export default {
         return promise;
     },
 
+    readLocations: function() {
+        var promise = axios.get(API_BASE + "/locations/", auth.authOptions);
+        this.handlePromise(promise);
+        return promise;
+    },
+    readLocationsCached: function() {
+        if (store.store.locations_cache != null) {
+            return store.store.locations_cache;
+        }
+
+        var promise = this.readLocations();
+        store.store.locations_cache = promise;
+
+        var timeout = setTimeout(() => {
+            store.store.locations_cache = null;
+        }, 1000 * 60 * 10); // 10 minutes
+
+        // if promise fails to resolve, clear instantly
+        promise.catch(() => {
+            clearTimeout(timeout);
+            store.store.locations_cache = null;
+        });
+        return promise;
+    },
+
     createDevice: function(device, note) {
         this.locked = true;
         var createDeviceRequest = {device: device, note: note};
