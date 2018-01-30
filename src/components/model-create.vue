@@ -7,7 +7,7 @@
 		</md-card-area>
 
 		<md-card-content>
-			<form novalidate @keyup.shift.enter.prevent.stop="saveAndAdd(model, note)">
+			<form novalidate @keyup.shift.enter.prevent.stop="saveAndAdd(model)">
 
 				<md-input-container :class="{'md-input-invalid': errors.has('manufacturer')}">
 					<label>Manufacturer</label>
@@ -21,17 +21,12 @@
 					<span class="md-error">{{errors.first("model")}}</span>
 				</md-input-container>
 
-				<md-input-container>
-					<label>Note</label>
-					<md-textarea v-model="note"></md-textarea>
-				</md-input-container>
-
 			</form>
 		</md-card-content>
 
 		<md-card-actions>
-			<md-button class="md-raised md-primary" @click="saveAndAdd(model, note)" :disabled="errors.any() || model.manufacturer == null || model.model == null">Save &amp; Add</md-button>
-			<md-button class="md-raised md-accent" @click="saveAndEdit(model, note)" :disabled="errors.any() || model.manufacturer == null || model.model == null">Save &amp; Edit</md-button>
+			<md-button class="md-raised md-primary" @click="saveAndAdd(model)" :disabled="errors.any() || model.manufacturer == null || model.model == null">Save &amp; Add</md-button>
+			<md-button class="md-raised md-accent" @click="saveAndEdit(model)" :disabled="errors.any() || model.manufacturer == null || model.model == null">Save &amp; Edit</md-button>
 			<md-button class="md-raised md-accent" @click="$router.push({name: 'dashboard'})">Cancel</md-button>
 		</md-card-actions>
 	</md-card>
@@ -48,12 +43,11 @@ export default {
             model: {
                 manufacturer: null,
                 model: null
-            },
-            note: null
+            }
         };
     },
     methods: {
-        save: function(model, note) {
+        save: function(model) {
             if (db.locked) { return; }
             this.$validator.validateAll();
             if (this.errors.any()) {
@@ -61,10 +55,10 @@ export default {
             }
 
             eventBus.$emit("start-saving");
-            return db.createModel(model, note);
+            return db.createModel(model);
         },
-        saveAndEdit: function(model, note) {
-            var promise = this.save(model, note);
+        saveAndEdit: function(model) {
+            var promise = this.save(model);
             if (promise == null) {
                 return;
             }
@@ -75,14 +69,13 @@ export default {
                 this.$router.push({name: "modelEdit", params: {id: newModel.id, _cache: newModel}});
             }).catch(this.catchError);
         },
-        saveAndAdd: function(model, note) {
-            var promise = this.save(model, note);
+        saveAndAdd: function(model) {
+            var promise = this.save(model);
             if (promise == null) {
                 return;
             }
             promise.then(() => {
                 this.model.model = null;
-                this.note = null;
                 this.$nextTick(function() {
                     this.errors.clear();
                     this.$refs.model.$el.focus();

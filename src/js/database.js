@@ -125,10 +125,9 @@ export default {
         return promise;
     },
 
-    createModel: function(model, note) {
+    createModel: function(model) {
         this.locked = true;
-        var createModelRequest = {model: model, note: note};
-        var promise = axios.post(API_BASE + "/models/", createModelRequest, auth.authOptions);
+        var promise = axios.post(API_BASE + "/models/", model, auth.authOptions);
         this.handlePromise(promise);
         return promise;
     },
@@ -148,21 +147,9 @@ export default {
         }, 100);
         return promise;
     },
-    readModelWithEvents: function(id) {
-        var promise = axios.get(API_BASE + "/models/" + id + "?events=true", auth.authOptions);
-        this.handlePromise(promise);
-        return promise;
-    },
     updateModel: function(model) {
         this.locked = true;
         var promise = axios.post(API_BASE + "/models/" + model.id, model, auth.authOptions);
-        this.handlePromise(promise);
-        return promise;
-    },
-    createModelNote: function(model_id, note) {
-        this.locked = true;
-        var noteRequest = {note: note};
-        var promise = axios.post(API_BASE + "/models/" + model_id + "/notes/", noteRequest, auth.authOptions);
         this.handlePromise(promise);
         return promise;
     },
