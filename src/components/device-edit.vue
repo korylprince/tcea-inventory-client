@@ -33,8 +33,10 @@
 					</md-input-container>
 
 					<md-input-container :class="{'md-input-invalid': errors.has('location')}">
-						<label>Location</label>
-						<md-input v-model="device.location" v-validate.initial="device.location" data-vv-name="location" data-vv-rules="required" required></md-input>
+						<label for="location">Location</label>
+						<md-select name="location" v-model="device.location" v-validate.initial="device.location" data-vv-name="location" data-vv-rules="required" required>
+							<md-option :value="location" v-for="location in locations">{{location}}</md-option>
+						</md-select>
 						<span class="md-error">{{errors.first("location")}}</span>
 					</md-input-container>
 
@@ -110,6 +112,7 @@ export default {
                 location: null
             },
             statuses: null,
+            locations: null,
             models: null,
             note: null
         };
@@ -226,11 +229,13 @@ export default {
             Promise.all([
                 db.readDeviceWithEvents(to.params.id),
                 db.readStatusesCached(),
+                db.readLocationsCached(),
                 db.readModels()
             ]).then((responses) => {
                 this.setDevice(responses[0].data);
                 this.statuses = responses[1].data.statuses;
-                this.models = responses[2].data.models;
+                this.locations = responses[2].data.locations;
+                this.models = responses[3].data.models;
             }).catch((error) => {
                 this.catchError(error);
             });
@@ -250,11 +255,12 @@ export default {
             }
         });
 
-        Promise.all([p0, db.readStatusesCached(), db.readModels()]).then(function(responses) {
+        Promise.all([p0, db.readStatusesCached(), db.readLocationsCached(), db.readModels()]).then(function(responses) {
             next(function(vm) {
                 vm.setDevice(responses[0]);
                 vm.statuses = responses[1].data.statuses;
-                vm.models = responses[2].data.models;
+                vm.locations = responses[2].data.locations;
+                vm.models = responses[3].data.models;
             });
         }).catch(function(error) {
             next(function(vm) {

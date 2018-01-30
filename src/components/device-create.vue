@@ -31,11 +31,13 @@
 					<span class="md-error">{{errors.first("status")}}</span>
                 </md-input-container>
 
-				<md-input-container :class="{'md-input-invalid': errors.has('location')}">
-					<label>Location</label>
-					<md-input v-model="device.location" v-validate.initial="device.location" data-vv-name="location" data-vv-rules="required" required></md-input>
+                <md-input-container :class="{'md-input-invalid': errors.has('location')}">
+                    <label for="location">Location</label>
+                    <md-select name="location" v-model="device.location" v-validate.initial="device.location" data-vv-name="location" data-vv-rules="required" required>
+                        <md-option :value="location" v-for="location in locations">{{location}}</md-option>
+                    </md-select>
 					<span class="md-error">{{errors.first("location")}}</span>
-				</md-input-container>
+                </md-input-container>
 
 				<md-input-container>
 					<label>Note</label>
@@ -70,6 +72,7 @@ export default {
             },
             note: null,
             statuses: null,
+            locations: null,
             models: null
         };
     },
@@ -132,10 +135,11 @@ export default {
     },
     beforeRouteEnter: function(to, from, next) {
         eventBus.$emit("start-loading");
-        Promise.all([db.readStatusesCached(), db.readModels()]).then(function(responses) {
+        Promise.all([db.readStatusesCached(), db.readLocationsCached(), db.readModels()]).then(function(responses) {
             next(function(vm) {
                 vm.statuses = responses[0].data.statuses;
-                vm.models = responses[1].data.models;
+                vm.locations = responses[1].data.locations;
+                vm.models = responses[2].data.models;
             });
         }).catch(function(error) {
             next(function(vm) {
