@@ -4,7 +4,7 @@ import "./css/main.css";
 import Vue from "vue";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
-import VSelect from "vue-select";
+import VSelect from "../vue-select/src/index.js";
 
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
