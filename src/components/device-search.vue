@@ -29,10 +29,15 @@
                     <md-input v-model="search.status"></md-input>
                 </md-input-container>
 
-                <md-input-container>
+                <div class="location">
                     <label>Location</label>
-                    <md-input v-model="search.location"></md-input>
-                </md-input-container>
+                    <v-select
+                        v-model="search.location"
+                        :options="locations"
+                        placeholder="Select location"
+                        >
+                    </v-select>
+                </div>
 
             </form>
 		</md-card-content>
@@ -60,7 +65,10 @@ export default {
                 model: null,
                 status: null,
                 location: null
-            }
+            },
+            statuses: null,
+            locations: [],
+            models: []
         };
     },
     computed: {
@@ -110,6 +118,33 @@ export default {
 
             console.error({error: error});
         }
+    },
+    beforeRouteEnter: function(to, from, next) {
+        eventBus.$emit("start-loading");
+
+        Promise.all([db.readStatusesCached(), db.readLocationsCached(), db.readModels()]).then(function(responses) {
+            next(function(vm) {
+                vm.statuses = responses[0].data.statuses;
+                vm.locations = responses[1].data.locations;
+                vm.models = responses[2].data.models;
+            });
+        }).catch(function(error) {
+            next(function(vm) {
+                vm.catchError(error);
+            });
+        });
     }
 };
 </script>
+<style>
+.location {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.v-select {
+    margin-top: 5px;
+    z-index: 100;
+}
+</style>
+
