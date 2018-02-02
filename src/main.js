@@ -17,8 +17,8 @@ import speedDial from "./components/speed-dial.vue";
 import feedbackView from "./components/feedback-view.vue";
 
 Vue.material.registerTheme("default", {
-    primary: "indigo",
-    accent: "pink",
+    primary: {color: "light-blue", hue: 500, textColor: "white"},
+    accent: "red",
     warn: "red",
     background: "white"
 });
