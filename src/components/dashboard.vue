@@ -57,6 +57,9 @@
                             <md-table-cell>{{location.location}}</md-table-cell>
                             <md-table-cell align="center"><a href="#" @click.prevent="doSearch({location: location.location})">{{location.count}}</a></md-table-cell>
                         </md-table-row>
+                        <md-table-row>
+                            <md-table-cell colspan="2" align="center"><strong><span>{{stats.location_count}} Total Locations</span></strong></md-table-cell>
+                        </md-table-row>
                     </md-table-body>
 
                 </md-table>
@@ -81,6 +84,9 @@
                         <md-table-row v-for="model in stats.models">
                             <md-table-cell><router-link :to="{name: 'modelEdit', params: {id: model.id}}">{{model.manufacturer}} {{model.model}}</router-link></md-table-cell>
                             <md-table-cell align="center"><a href="#" @click.prevent="doSearch({manufacturer: model.manufacturer, model: model.model})">{{model.count}}</a></md-table-cell>
+                        </md-table-row>
+                        <md-table-row>
+                            <md-table-cell colspan="2" align="center"><strong><a href="#" @click.prevent="doModelSearch({})">{{stats.model_count}} Total Models</a></strong></md-table-cell>
                         </md-table-row>
                     </md-table-body>
 
@@ -146,6 +152,21 @@ export default {
 
                 store.newDeviceSearch(response.data.devices);
                 this.$router.push({name: "deviceList"});
+            }).catch(this.catchError);
+        },
+        doModelSearch: function() {
+            eventBus.$emit("start-loading");
+            var promise = db.queryModel({});
+
+            promise.then((response) => {
+                eventBus.$emit("stop-loading");
+                if (response.data.models == null) {
+                    eventBus.$emit("error-dialog", "No models found");
+                    return;
+                }
+
+                store.newModelSearch(response.data.models);
+                this.$router.push({name: "modelList"});
             }).catch(this.catchError);
         },
         refresh: function() {
