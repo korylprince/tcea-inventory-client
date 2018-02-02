@@ -34,6 +34,7 @@
                     <v-select
                         v-model="search.location"
                         :options="locations"
+                        :filter="fuzzySearch"
                         placeholder="Select location"
                         >
                     </v-select>
@@ -54,9 +55,10 @@ import db from "../js/database.js";
 import store from "../js/store.js";
 import eventBus from "../js/event-bus.js";
 import loadingMixin from "../mixins/loading.js";
+import fuzzyMixin from "../mixins/fuzzy.js";
 export default {
     name: "model-search",
-    mixins: [loadingMixin],
+    mixins: [loadingMixin, fuzzyMixin],
     data: function() {
         return {
             search: {

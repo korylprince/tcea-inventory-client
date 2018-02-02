@@ -37,6 +37,7 @@
                         <v-select v-model="device.location"
                             name="location"
                             :options="locations"
+                            :filter="fuzzySearch"
                             placeholder="Select location"
                             v-validate.initial="device.location"
                             data-vv-name="location"
@@ -96,9 +97,10 @@ import db from "../js/database.js";
 import eventBus from "../js/event-bus.js";
 import eventView from "./event-view.vue";
 import loadingMixin from "../mixins/loading.js";
+import fuzzyMixin from "../mixins/fuzzy.js";
 export default {
     name: "device-edit",
-    mixins: [loadingMixin],
+    mixins: [loadingMixin, fuzzyMixin],
     components: {eventView},
     data: function() {
         return {
