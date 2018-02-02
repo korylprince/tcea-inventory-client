@@ -44,7 +44,7 @@
 		</md-card-content>
 
         <md-card-actions>
-            <md-button class="md-raised md-primary" @click="doSearch(search)" :disabled="!validSearch">Search</md-button>
+            <md-button class="md-raised md-primary" @click="doSearch(search)">Search</md-button>
             <md-button class="md-raised md-accent" @click="$router.push({name: 'dashboard'})">Cancel</md-button>
         </md-card-actions>
 
@@ -73,21 +73,8 @@ export default {
             models: []
         };
     },
-    computed: {
-        validSearch: function() {
-            return (this.search.serial_number != null && this.search.serial_number !== "") ||
-                (this.search.manufacturer != null && this.search.manufacturer !== "") ||
-                (this.search.model != null && this.search.model !== "") ||
-                (this.search.status != null && this.search.status !== "") ||
-                (this.search.location != null && this.search.location !== "");
-        }
-    },
     methods: {
         doSearch: function(search) {
-            if (!this.validSearch) {
-                return;
-            }
-
             eventBus.$emit("start-loading");
             var promise = db.queryDevice(search);
 
