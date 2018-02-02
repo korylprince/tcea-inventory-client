@@ -92,7 +92,6 @@
 </template>
 <script>
 import debounce from "lodash/debounce";
-import VSelect from "vue-select";
 import db from "../js/database.js";
 import eventBus from "../js/event-bus.js";
 import eventView from "./event-view.vue";
@@ -100,7 +99,7 @@ import loadingMixin from "../mixins/loading.js";
 export default {
     name: "device-edit",
     mixins: [loadingMixin],
-    components: {eventView, VSelect},
+    components: {eventView},
     data: function() {
         return {
             device: {

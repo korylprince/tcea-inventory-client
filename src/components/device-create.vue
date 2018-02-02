@@ -61,14 +61,12 @@
 </template>
 <script>
 import debounce from "lodash/debounce";
-import VSelect from "vue-select";
 import db from "../js/database.js";
 import eventBus from "../js/event-bus.js";
 import loadingMixin from "../mixins/loading.js";
 export default {
     name: "device-create",
     mixins: [loadingMixin],
-    components: {VSelect},
     data: function() {
         return {
             device: {

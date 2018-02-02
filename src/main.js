@@ -4,9 +4,11 @@ import "./css/main.css";
 import Vue from "vue";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
+import VSelect from "vue-select";
 
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
+Vue.component("v-select", VSelect);
 
 import router from "./js/router.js";
 
