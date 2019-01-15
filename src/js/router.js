@@ -21,7 +21,6 @@ import userEditView from "../components/user-edit.vue";
 import notFoundView from "../components/not-found.vue";
 
 var router = new VueRouter({
-    mode: "history",
     scrollBehavior: function(to, from, savedPosition) {
         to.params.savedPosition = savedPosition;
         if (savedPosition) {
